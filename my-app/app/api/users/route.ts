@@ -1,8 +1,17 @@
 import { NextResponse } from "next/server";
-import { clerkClient } from "@clerk/clerk-sdk-node";
+import { supabase } from "@/app/lib/supabase";
 
-export async function GET() {
-  const users = await clerkClient.users.getUserList();
+export async function POST(req: Request) {
+  const { userId } = await req.json();
 
-  return NextResponse.json(users);
+  const { error } = await supabase
+    .from("profiles")
+    .update({ is_verified: true })
+    .eq("user_id", userId);
+
+  if (error) {
+    return NextResponse.json({ error });
+  }
+
+  return NextResponse.json({ success: true });
 }
