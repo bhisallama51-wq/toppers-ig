@@ -11,22 +11,29 @@ export default async function UsersPage() {
 
       {error && <p>Error loading users</p>}
 
-      {users?.map((user) => (
-        <div
-          key={user.user_id}
-          style={{
-            border: "1px solid gray",
-            padding: "10px",
-            marginBottom: "10px",
-          }}
-        >
-          <p>Email: {user.email}</p>
-          <p>Role: {user.role}</p>
-          <p>
-            Verified: {user.is_verified ? "Yes" : "No"}
-          </p>
-        </div>
-      ))}
+      <table border={1} cellPadding={10}>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Verified</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {users?.map((user) => (
+            <tr key={user.user_id}>
+              <td>{user.full_name}</td>
+              <td>{user.email}</td>
+              <td>{user.role}</td>
+              <td>
+                {user.is_verified ? "✅ Yes" : "❌ No"}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </main>
   );
 }
